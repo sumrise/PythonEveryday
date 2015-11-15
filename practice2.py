@@ -5,15 +5,25 @@
 
 __author__ = 'sumrise'
 
-import random, string
+import practice1
+import MySQLdb
 
-field = string.letters + string.digits
+db = MySQLdb.connect("localhost", "", "", "python_practice")
 
+cursor = db.cursor()
 
-def generator():
-    return '-'.join([''.join(random.sample(field, 4)) for i in range(4)])
+print()
+for i in range(200):
+    code = practice1.generator()
+    sql = 'insert into practice2(id,code) VALUES ("%d","%s")' % \
+          (db.insert_id(), code)
+    print(code)
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except:
+        db.rollback()
 
+db.close()
 
-if __name__ == '__main__':
-    for i in range(200):
-        print str(i) + " " + generator()
+print ""

@@ -5,18 +5,15 @@
 
 __author__ = 'sumrise'
 
-from PIL import ImageFont
-from PIL import Image
-from PIL import ImageDraw
+import random, string
 
-# 设置字体
-font = ImageFont.truetype("/Library/Fonts/Arial Italic.ttf", 20)
+field = string.letters + string.digits
 
 
-imageFile = "head.png"
-im1 = Image.open(imageFile)
-draw = ImageDraw.Draw(im1)
-draw.text((350, 20), "10", (255, 0, 0), font=font)
-draw = ImageDraw.Draw(im1)
+def generator():
+    return '-'.join([''.join(random.sample(field, 4)) for i in range(4)])
 
-im1.save("target.png")
+
+if __name__ == '__main__':
+    for i in range(200):
+        print str(i) + " " + generator()
